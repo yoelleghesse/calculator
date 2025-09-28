@@ -35,10 +35,7 @@ button {
   margin-bottom: 5px;      
 }
 
-.plus,
-.subtract,
-.equals,
-.multiply,
-.divide {
+.operation,
+.equals {
     background-color: orange;
 }
