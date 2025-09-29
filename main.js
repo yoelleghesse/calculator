@@ -98,7 +98,8 @@ const equals = document.querySelector(".equals")
 equals.addEventListener("click", () => {
     if (!previousInput || !currentInput || !operator) return; // safety check
     const result = operatorFunc(operator, Number(previousInput), Number(currentInput));
-    setDisplay(result);
+    const rounded = Number(result.toFixed(10));
+    setDisplay(rounded);
     currentInput = result.toString(); // allow chaining calculations
     previousInput = "";
     operator = null;
