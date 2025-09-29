@@ -22,59 +22,90 @@ const divide = function(a, b) {
     return a / b;
 }
 
-
-
 // operator + function to determine which function I want calculator to do
 function operatorFunc(op, a, b) {
     switch (op) {
         case "+":
-            add(a, b);
-            break;
+            return add(a, b);
         case "-":
-            subtract(a, b);
-            break;
+            return subtract(a, b);
         case "x":
-            multiply(a, b);
-            break;
+            return multiply(a, b);
         case "/":
-            divide(a, b)
+            return divide(a, b)
     }
 }
 
+let currentInput = ''
+let previousInput = ''
+let operator = null
+
 // displaying the num in display
+const display = document.querySelector(".display")
+
 function updateDisplay(num) {
-    const display = document.querySelector(".display")
-    display.textContent = num
+    display.textContent += num
+}
+
+function setDisplay(value) {
+    display.textContent = value
 }
 
 // adding event listeners to each number and dot
 const numbers = document.querySelectorAll('.number');
 for (const num of numbers) {
     num.addEventListener("click", () => {
-        updateDisplay(num.textContent)
+        const digit = num.textContent;
+        currentInput += digit // current input
+        updateDisplay(digit)
+        
     })
 }
 
 const dot = document.querySelector('.dot');
 dot.addEventListener('click', () => {
-    updateDisplay(dot.textContent)
-})
+    if (!currentInput.includes(".")) {  // allow only one decimal
+    currentInput += ".";
+    updateDisplay(".");
+    }
+});
 
 // clearing the screen
-function clearDisplay() {
-    const display = document.querySelector(".display")
-    display.textContent = ""
-}
 const clear = document.querySelector('.clear')
-clear.addEventListener('click', () => {
-    clearDisplay()
-})
 
+clear.addEventListener('click', () => {
+    currentInput = "";
+    previousInput = "";
+    operator = null;
+    setDisplay("");
+});
 
 // adding operations to the screen
 const operations = document.querySelectorAll(".operation");
 for (const op of operations) {
     op.addEventListener("click", () =>  {
-        updateDisplay(op.textContent)
+        if (currentInput === "") return;
+        previousInput = currentInput;
+        operator = op.textContent
+        currentInput = ""
+        setDisplay("")
     })
 }
+
+// calculations
+const equals = document.querySelector(".equals")
+
+equals.addEventListener("click", () => {
+    if (!previousInput || !currentInput || !operator) return; // safety check
+    const result = operatorFunc(operator, Number(previousInput), Number(currentInput));
+    setDisplay(result);
+    currentInput = result.toString(); // allow chaining calculations
+    previousInput = "";
+    operator = null;
+});
+
+
+
+    
+    
+
