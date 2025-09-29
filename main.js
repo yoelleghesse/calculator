@@ -84,13 +84,22 @@ clear.addEventListener('click', () => {
 const operations = document.querySelectorAll(".operation");
 for (const op of operations) {
     op.addEventListener("click", () =>  {
-        if (currentInput === "") return;
+        if (currentInput === "" && previousInput === "") return; // nothing to operate on
+
+        // If there is a previous value and operator, calculate first
+        if (previousInput !== "" && operator !== null) {
+        previousInput = operatorFunc(operator, Number(previousInput), Number(currentInput));
+        setDisplay(previousInput);
+        } else {
         previousInput = currentInput;
-        operator = op.textContent
-        currentInput = "" // clears num and doesn't show operator, skips to result
-        setDisplay("") // ^
-    })
-}
+        }
+
+        operator = op.textContent // store new operator
+        
+        setDisplay("") // clears screen after op added
+        currentInput = "";        // reset for next number
+    });
+};
 
 // calculations
 const equals = document.querySelector(".equals")
