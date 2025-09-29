@@ -44,11 +44,11 @@ let operator = null
 const display = document.querySelector(".display")
 
 function updateDisplay(num) {
-    display.textContent += num
+    display.textContent += num // adds to the text content
 }
 
 function setDisplay(value) {
-    display.textContent = value
+    display.textContent = value // reassigns text content for clearing, the result etc., 
 }
 
 // adding event listeners to each number and dot
@@ -87,8 +87,8 @@ for (const op of operations) {
         if (currentInput === "") return;
         previousInput = currentInput;
         operator = op.textContent
-        currentInput = ""
-        setDisplay("")
+        currentInput = "" // clears num and doesn't show operator, skips to result
+        setDisplay("") // ^
     })
 }
 
