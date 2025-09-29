@@ -39,6 +39,7 @@ function operatorFunc(op, a, b) {
 let currentInput = ''
 let previousInput = ''
 let operator = null
+let shouldReset = false
 
 // displaying the num in display
 const display = document.querySelector(".display")
@@ -56,6 +57,12 @@ const numbers = document.querySelectorAll('.number');
 for (const num of numbers) {
     num.addEventListener("click", () => {
         const digit = num.textContent;
+
+        if (shouldReset) {  // after finding result, when clicking new num, clears screen
+            setDisplay("");
+            currentInput = ''
+            shouldReset = false
+        }
         currentInput += digit // current input
         updateDisplay(digit)
         
@@ -112,6 +119,7 @@ equals.addEventListener("click", () => {
     currentInput = result.toString(); // allow chaining calculations
     previousInput = "";
     operator = null;
+    shouldReset = true; // resets screen when new num clicked
 });
 
 
